@@ -2,6 +2,9 @@
 
 OUTPUT_FILE_NAME="a.out"
 
+COMPILER="g++ -std=c++11"
+LINKER_FLAGS=""
+
 CPP_FILES=`find ./ | grep ".cpp$" | tr '\n' ' '`
 
 FILES_FOUND="false"
@@ -13,11 +16,11 @@ do
 	then
 		if [ "$FILE" -nt "$OBJECT_FILE" ]
 		then
-			COMPILATION_RESULT=`g++ $FILE -std=c++11 -c -o "$OBJECT_FILE" 2>&1`
+			COMPILATION_RESULT=`$COMPILER $FILE -c -o "$OBJECT_FILE" 2>&1`
 			FILES_FOUND="true"
 		fi
 	else
-		COMPILATION_RESULT=`g++ $FILE -std=c++11 -c -o "$OBJECT_FILE"`
+		COMPILATION_RESULT=`$COMPILER $FILE -c -o "$OBJECT_FILE"`
 		FILES_FOUND="true"
 	fi
 
@@ -32,7 +35,7 @@ done
 
 if [ "$FILES_FOUND" = "true" ]
 then
-	COMPILATION_RESULT=`g++ $OBJECT_FILES -std=c++11 -o "$OUTPUT_FILE_NAME"`
+	COMPILATION_RESULT=`$COMPILER $OBJECT_FILES -o "$OUTPUT_FILE_NAME"`
 	if [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
 		echo "Compilation completed succesfully!"
