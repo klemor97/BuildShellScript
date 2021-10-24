@@ -5,7 +5,7 @@ OUTPUT_FILE_NAME="a.out"
 COMPILER="g++ -std=c++11"
 LINKER_FLAGS=""
 
-CPP_FILES=`find ./ | grep ".cpp$" | tr '\n' ' '`
+CPP_FILES=`find ./ | grep ".cpp$"`
 
 FILES_FOUND="false"
 
