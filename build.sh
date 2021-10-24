@@ -4,6 +4,7 @@ OUTPUT_FILE_NAME="a.out"
 
 COMPILER="g++"
 STANDARD="-std=c++11"
+INCLUDES=""
 LINKER_FLAGS=""
 
 CPP_FILES=`find ./ | grep ".cpp$"`
@@ -15,7 +16,7 @@ do
 	OBJECT_FILE="`echo "$FILE" | sed "s/.cpp$//"`.o"
 	if [ ! -f "$OBJECT_FILE" ] || ( [ -f "$OBJECT_FILE" ] && [ "$FILE" -nt "$OBJECT_FILE" ] )
 	then
-		COMPILATION_RESULT=`$COMPILER $STANDARD $FILE -c -o "$OBJECT_FILE" 2>&1`
+		COMPILATION_RESULT=`$COMPILER $STANDARD $FILE -c -o "$OBJECT_FILE" $INCLUDES 2>&1`
 		FILES_FOUND="true"
 	fi
 
