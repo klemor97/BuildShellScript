@@ -12,15 +12,9 @@ FILES_FOUND="false"
 for FILE in $CPP_FILES
 do
 	OBJECT_FILE="`echo "$FILE" | sed "s/.cpp$//"`.o"
-	if [ -f "$OBJECT_FILE" ]
+	if [ ! -f "$OBJECT_FILE" ] || ( [ -f "$OBJECT_FILE" ] && [ "$FILE" -nt "$OBJECT_FILE" ] )
 	then
-		if [ "$FILE" -nt "$OBJECT_FILE" ]
-		then
-			COMPILATION_RESULT=`$COMPILER $FILE -c -o "$OBJECT_FILE" 2>&1`
-			FILES_FOUND="true"
-		fi
-	else
-		COMPILATION_RESULT=`$COMPILER $FILE -c -o "$OBJECT_FILE"`
+		COMPILATION_RESULT=`$COMPILER $FILE -c -o "$OBJECT_FILE" 2>&1`
 		FILES_FOUND="true"
 	fi
 
