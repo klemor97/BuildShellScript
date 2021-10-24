@@ -30,7 +30,7 @@ done
 
 if [ "$FILES_FOUND" = "true" ]
 then
-	COMPILATION_RESULT=`$COMPILER $STANDARD $LINKER_FLAGS $OBJECT_FILES -o "$OUTPUT_FILE_NAME"`
+	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS`
 	if [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
 		echo "Compilation completed succesfully!"
