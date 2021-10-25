@@ -11,6 +11,19 @@ CPP_FILES=`find ./ | grep ".cpp$"`
 
 FILES_FOUND="false"
 
+if [ "$1" = "clean" ]
+then
+	for FILE in $CPP_FILES
+	do
+		OBJECT_FILE="`echo "$FILE" | sed "s/.cpp$//"`.o"
+		OBJECT_FILES="$OBJECT_FILES $OBJECT_FILE"
+	done
+
+	rm $OBJECT_FILES $OUTPUT_FILE_NAME > /dev/null 2>&1
+
+	exit
+fi
+
 for FILE in $CPP_FILES
 do
 	OBJECT_FILE="`echo "$FILE" | sed "s/.cpp$//"`.o"
