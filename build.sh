@@ -13,8 +13,8 @@ FILES_FOUND="false"
 
 WARNINGS_FOUND="false"
 
-COLOR_RED="\033[38;5;196m"
-COLOR_YELLOW="\033[38;5;226m"
+COLOR_RED="\033[38;5;160m"
+COLOR_YELLOW="\033[38;5;220m"
 COLOR_GREEN="\033[38;5;46m"
 
 if [ "$1" = "clean" ]
@@ -45,6 +45,7 @@ do
 		if [ ! -z "`echo "$COMPILATION_RESULT" | grep "error" | tr -d '\n'`" ]
 		then
 			echo "$COMPILATION_RESULT"
+			echo "${COLOR_RED}Compilation failed!"
 			exit
 		fi
 
@@ -70,6 +71,7 @@ then
 		echo "${COLOR_YELLOW}Compilation completed with warnings!"
 	else
 		echo "$COLOR_RED$COMPILATION_RESULT"
+		echo "${COLOR_RED}Linking failed!"
 	fi
 else
 	echo "No modified files were found!"
