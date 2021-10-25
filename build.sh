@@ -11,6 +11,8 @@ CPP_FILES=`find ./ | grep ".cpp$"`
 
 FILES_FOUND="false"
 
+WARNINGS_FOUND="false"
+
 if [ "$1" = "clean" ]
 then
 	for FILE in $CPP_FILES
@@ -36,8 +38,17 @@ do
 
 	if [ ! -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "$COMPILATION_RESULT"
-		exit
+		if [ ! -z "`echo "$COMPILATION_RESULT" | grep "error" | tr -d '\n'`" ]
+		then
+			echo "$COMPILATION_RESULT"
+			exit
+		fi
+
+		if [ ! -z "`echo "$COMPILATION_RESULT" | grep "warning" | tr -d '\n'`" ]
+		then
+			echo "$COMPILATION_RESULT"
+			WARNINGS_FOUND="true"
+		fi
 	fi
 	
 	OBJECT_FILES="$OBJECT_FILES $OBJECT_FILE"
@@ -47,9 +58,12 @@ if [ "$FILES_FOUND" = "true" ]
 then
 	echo "Linking"
 	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS`
-	if [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
+	if [ "$WARNINGS_FOUND" = "false" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
 		echo "Compilation completed succesfully!"
+	elif [ "$WARNINGS_FOUND" = "true" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
+	then
+		echo "Compilation completed with warnings!"
 	else
 		echo "$COMPILATION_RESULT"
 	fi
