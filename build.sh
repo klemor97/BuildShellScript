@@ -62,7 +62,8 @@ done
 if [ "$FILES_FOUND" = "true" ]
 then
 	echo "Linking"
-	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS`
+	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS 2>&1`
+	
 	if [ "$WARNINGS_FOUND" = "false" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
 		echo "${COLOR_GREEN}Compilation completed succesfully!"
@@ -70,7 +71,7 @@ then
 	then
 		echo "${COLOR_YELLOW}Compilation completed with warnings!"
 	else
-		echo "$COLOR_RED$COMPILATION_RESULT"
+		echo "$COMPILATION_RESULT"
 		echo "${COLOR_RED}Linking failed!"
 	fi
 else
