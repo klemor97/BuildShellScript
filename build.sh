@@ -29,6 +29,7 @@ do
 	OBJECT_FILE="`echo "$FILE" | sed "s/.cpp$//"`.o"
 	if [ ! -f "$OBJECT_FILE" ] || ( [ -f "$OBJECT_FILE" ] && [ "$FILE" -nt "$OBJECT_FILE" ] )
 	then
+		echo "Compiling: $FILE"
 		COMPILATION_RESULT=`$COMPILER $STANDARD $FILE -c -o "$OBJECT_FILE" $INCLUDES 2>&1`
 		FILES_FOUND="true"
 	fi
@@ -44,6 +45,7 @@ done
 
 if [ "$FILES_FOUND" = "true" ]
 then
+	echo "Linking"
 	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS`
 	if [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
