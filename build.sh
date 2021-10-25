@@ -13,6 +13,10 @@ FILES_FOUND="false"
 
 WARNINGS_FOUND="false"
 
+COLOR_RED="\033[38;5;196m"
+COLOR_YELLOW="\033[38;5;226m"
+COLOR_GREEN="\033[38;5;46m"
+
 if [ "$1" = "clean" ]
 then
 	for FILE in $CPP_FILES
@@ -60,12 +64,12 @@ then
 	COMPILATION_RESULT=`$COMPILER $STANDARD $OBJECT_FILES -o "$OUTPUT_FILE_NAME" $LINKER_FLAGS`
 	if [ "$WARNINGS_FOUND" = "false" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "Compilation completed succesfully!"
+		echo "${COLOR_GREEN}Compilation completed succesfully!"
 	elif [ "$WARNINGS_FOUND" = "true" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "Compilation completed with warnings!"
+		echo "${COLOR_YELLOW}Compilation completed with warnings!"
 	else
-		echo "$COMPILATION_RESULT"
+		echo "$COLOR_RED$COMPILATION_RESULT"
 	fi
 else
 	echo "No modified files were found!"
