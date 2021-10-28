@@ -17,6 +17,8 @@ COLOR_RED="\033[38;5;160m"
 COLOR_YELLOW="\033[38;5;220m"
 COLOR_GREEN="\033[38;5;46m"
 
+COLOR_RESET="\033[39m"
+
 if [ "$1" = "clean" ]
 then
 	for FILE in $CPP_FILES
@@ -45,7 +47,7 @@ do
 		if [ ! -z "`echo "$COMPILATION_RESULT" | grep "error" | tr -d '\n'`" ]
 		then
 			echo "$COMPILATION_RESULT"
-			echo "${COLOR_RED}Compilation failed!"
+			echo "${COLOR_RED}Compilation failed!${COLOR_RESET}"
 			exit
 		fi
 
@@ -66,13 +68,19 @@ then
 	
 	if [ "$WARNINGS_FOUND" = "false" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "${COLOR_GREEN}Compilation completed succesfully!"
+		echo "${COLOR_GREEN}Compilation completed succesfully!${COLOR_RESET}"
 	elif [ "$WARNINGS_FOUND" = "true" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "${COLOR_YELLOW}Compilation completed with warnings!"
+		echo "${COLOR_YELLOW}Compilation completed with warnings!${COLOR_RESET}"
 	else
 		echo "$COMPILATION_RESULT"
-		echo "${COLOR_RED}Linking failed!"
+		echo "${COLOR_RED}Linking failed!${COLOR_RESET}"
+		exit
+	fi
+
+	if [ "$1" = "run" ]
+	then
+		./a.out
 	fi
 else
 	echo "No modified files were found!"
