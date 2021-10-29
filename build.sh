@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 OUTPUT_FILE_NAME="a.out"
 
 COMPILER="g++"
 STANDARD="-std=c++11"
 INCLUDES=""
-LINKER_FLAGS=""
+LINKER_FLAGS="-lglfw -lGLEW -lGL"
 
 CPP_FILES=`find ./ | grep ".cpp$"`
 
@@ -47,7 +47,7 @@ do
 		if [ ! -z "`echo "$COMPILATION_RESULT" | grep "error" | tr -d '\n'`" ]
 		then
 			echo "$COMPILATION_RESULT"
-			echo "${COLOR_RED}Compilation failed!${COLOR_RESET}"
+			echo -e "${COLOR_RED}Compilation failed!${COLOR_RESET}"
 			exit
 		fi
 
@@ -68,13 +68,13 @@ then
 	
 	if [ "$WARNINGS_FOUND" = "false" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "${COLOR_GREEN}Compilation completed succesfully!${COLOR_RESET}"
+		echo -e "${COLOR_GREEN}Compilation completed succesfully!${COLOR_RESET}"
 	elif [ "$WARNINGS_FOUND" = "true" ] && [ -z "`echo "$COMPILATION_RESULT" | tr -d '\n'`" ]
 	then
-		echo "${COLOR_YELLOW}Compilation completed with warnings!${COLOR_RESET}"
+		echo -e "${COLOR_YELLOW}Compilation completed with warnings!${COLOR_RESET}"
 	else
 		echo "$COMPILATION_RESULT"
-		echo "${COLOR_RED}Linking failed!${COLOR_RESET}"
+		echo -e "${COLOR_RED}Linking failed!${COLOR_RESET}"
 		exit
 	fi
 
