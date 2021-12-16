@@ -7,7 +7,7 @@ STANDARD="-std=c++11"
 INCLUDES=""
 LINKER_FLAGS="-lglfw -lGLEW -lGL"
 
-CPP_FILES=`find ./ | grep ".cpp$"`
+CPP_FILES=`find ./ | grep "\.cpp$"`
 
 FILES_FOUND="false"
 
